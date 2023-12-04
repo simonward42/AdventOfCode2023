@@ -3,4 +3,4 @@ using AdventOfCode2023.Day1;
 
 Console.WriteLine("Hello, World!");
 
-Console.WriteLine(new Day1().Solve());
+Console.WriteLine($"{new Solution().SolvePretty()}");
