@@ -8,9 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Update="Day2\input.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Day1\input.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <InternalsVisibleTo Include="AdventOfCode2023.Tests" />
+
   </ItemGroup>
 
 </Project>

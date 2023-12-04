@@ -1,6 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using AdventOfCode2023.Day1;
+using aoc2023 = AdventOfCode2023;
 
-Console.WriteLine("Hello, World!");
-
-Console.WriteLine($"{new Solution().SolvePretty()}");
+Console.WriteLine($"{new aoc2023.Day1.Solution().SolvePretty()}");
+Console.WriteLine($"{new aoc2023.Day2.Solution().SolvePretty()}");

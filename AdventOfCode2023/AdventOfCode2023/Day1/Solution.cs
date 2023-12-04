@@ -46,7 +46,6 @@ public class Solution : Puzzle<int>
 
 		for (int i = 0; i < input.Length; i++)
 		{
-			var substr = input[i..];
 			if (_DigitFoundAtStart(input[i..], out int digit))
 			{
 				digits.Add(digit);
