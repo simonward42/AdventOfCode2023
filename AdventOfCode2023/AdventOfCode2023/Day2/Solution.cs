@@ -18,7 +18,7 @@ public class Solution : Puzzle<int>
 	//Game {ID}: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
 	//separated by ';' handfuls of coloured cubes grabbed from the bag
 	//need to find the IDs of the games that would be possible if there were certain numbers of each colour (given by the maxRed, maxGreen and maxBlue fields)
-	//return the sum of the possible IDs
+	//return the sum of the possible IDs.
 	protected override int SolvePart1()
 	{
 		while (InputReader!.TryReadLine(out string? currentLine))
@@ -32,6 +32,25 @@ public class Solution : Puzzle<int>
 		}
 
 		return _solutionPart1;
+	}
+
+	//For each game:
+	//def(i) the 'minimum set': the minimum set of cubes the bag would need to contain to make the game possibe, e.g. for
+	//Game {ID}: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
+	//the minumum set = {4 red, 2 green, 6 blue}
+	//
+	//def(ii) the 'power' of a set = red * green * blue
+	//
+	//find the powers of the minimum sets for each game, and return their sum.
+	protected override int SolvePart2()
+	{
+		while (InputReader!.TryReadLine(out string? currentLine))
+		{
+			var game = ParseGame(currentLine);
+
+			_solutionPart2 += game.PowerOfMinimumSet();
+		}
+		return _solutionPart2;
 	}
 
 	internal static Game ParseGame(string gameLine)
@@ -87,11 +106,5 @@ public class Solution : Puzzle<int>
 		return redMatch.Success
 			? int.Parse(redMatch.Groups[1].Value)
 			: 0;
-	}
-
-	//...
-	protected override int SolvePart2()
-	{
-		return _solutionPart2;
 	}
 }

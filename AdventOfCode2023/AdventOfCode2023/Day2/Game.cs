@@ -12,6 +12,11 @@ internal class Game
 			round.Green <= maxG &&
 			round.Blue <= maxB);
 	}
+
+	internal int PowerOfMinimumSet()
+	{
+		return Rounds.Max(r => r.Red) * Rounds.Max(r => r.Green) * Rounds.Max(r => r.Blue);
+	}
 }
 
 internal class Round
