@@ -5,16 +5,24 @@ namespace AdventOfCode2023;
 public abstract class Puzzle<TAnswer> : IDisposable
 {
 	const string _inputFile = "input.txt";
-	readonly string _inputPath;
 	readonly int _day;
 
-	public InputReader InputReader;
+	public IInputReader InputReader;
 
-	public Puzzle(int day)
+	public Puzzle(int day, IInputReader? reader = null)
 	{
 		_day = day;
-		_inputPath = $"Day{_day}/{_inputFile}";
-		InputReader = new InputReader(_inputPath);
+
+		if (reader == null)
+		{
+			_day = day;
+			var inputPath = $"Day{_day}/{_inputFile}";
+			InputReader = new InputFileReader(inputPath);
+		}
+		else
+		{
+			InputReader = reader;
+		}
 	}
 
 	public string SolvePretty()
@@ -29,24 +37,14 @@ public abstract class Puzzle<TAnswer> : IDisposable
 
 	public TAnswer GetPart1Answer()
 	{
-		TAnswer part1;
-		using (InputReader = new InputReader(_inputPath))
-		{
-			part1 = SolvePart1();
-		}
-
-		return part1;
+		InputReader.Rewind();
+		return SolvePart1();
 	}
 
 	public TAnswer GetPart2Answer()
 	{
-		TAnswer part2;
-		using (InputReader = new InputReader(_inputPath))
-		{
-			part2 = SolvePart2();
-		}
-
-		return part2;
+		InputReader.Rewind();
+		return SolvePart2();
 	}
 
 	protected abstract TAnswer SolvePart1();
