@@ -35,7 +35,7 @@ public class GameTests
 	public void PowerOfMinimumSet()
 	{
 		var expectedPower = 4 * 2 * 6;
-		var actualPower = _game.PowerOfMinimumSet();
+		var actualPower = _game.PowerOfMinimumSet;
 
 		actualPower.Should().Be(expectedPower);
 	}

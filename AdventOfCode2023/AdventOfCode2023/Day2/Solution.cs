@@ -48,7 +48,7 @@ public class Solution : Puzzle<int>
 		{
 			var game = ParseGame(currentLine);
 
-			_solutionPart2 += game.PowerOfMinimumSet();
+			_solutionPart2 += game.PowerOfMinimumSet;
 		}
 		return _solutionPart2;
 	}

@@ -19,18 +19,8 @@ public abstract class Puzzle<TAnswer> : IDisposable
 
 	public string SolvePretty()
 	{
-		TAnswer part1;
-		TAnswer part2;
-
-		using (InputReader = new InputReader(_inputPath))
-		{
-			part1 = SolvePart1();
-		}
-
-		using (InputReader = new InputReader(_inputPath))
-		{
-			part2 = SolvePart2();
-		}
+		TAnswer part1 = GetPart1Answer();
+		TAnswer part2 = GetPart2Answer();
 
 		return $"+++ Day {_day}\n" +
 			$"---- Part 1: {part1}\n" +
