@@ -16,7 +16,7 @@ public class Solution : Puzzle<int>
 	//return the sum of all calibration vals. 
 	protected override int SolvePart1()
 	{
-		while (InputReader!.TryReadLine(out string? currentLine))
+		while (InputReader.TryReadLine(out string? currentLine))
 		{
 			var digits = currentLine.GetDigits();
 			var calibrationVal = _GetCalibrationVal(digits);
@@ -30,7 +30,7 @@ public class Solution : Puzzle<int>
 	//do the same as part one, but including these 'wordy' digits...
 	protected override int SolvePart2()
 	{
-		while (InputReader!.TryReadLine(out string? currentLine))
+		while (InputReader.TryReadLine(out string? currentLine))
 		{
 			var digits = _ParseDigits(currentLine);
 			var calibrationVal = _GetCalibrationVal(digits);

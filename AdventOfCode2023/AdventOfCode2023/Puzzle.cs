@@ -50,5 +50,9 @@ public abstract class Puzzle<TAnswer> : IDisposable
 	protected abstract TAnswer SolvePart1();
 	protected abstract TAnswer SolvePart2();
 
-	public void Dispose() => InputReader.Dispose();
+	public void Dispose()
+	{
+		InputReader.Dispose();
+		GC.SuppressFinalize(this);
+	}
 }

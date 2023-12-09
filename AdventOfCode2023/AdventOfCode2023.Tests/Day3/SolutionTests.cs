@@ -1,3 +1,5 @@
+using System.Text.RegularExpressions;
+
 using AdventOfCode2023.Day3;
 using AdventOfCode2023.Util;
 
@@ -38,15 +40,38 @@ public class SolutionTests
 	}
 
 	[Test]
+	public void TestRegexMatches()
+	{
+		var testString = "$.617*..12..+.";
+		var numberRegexStr = @"(\d+)"; //one or more digits
+		var symbolRegexStr = @"([^\d.])"; //not digit or period
+
+		var numberRegex = new Regex(numberRegexStr);
+		var symbolRegex = new Regex(symbolRegexStr);
+
+		var numberMatches = numberRegex.Matches(testString);
+		var symbolMatches = symbolRegex.Matches(testString);
+
+		numberMatches.Count.Should().Be(2);
+		symbolMatches.Count.Should().Be(3);
+
+		numberMatches[0].Value.Should().Be("617");
+		numberMatches[0].Index.Should().Be(2);
+
+		numberMatches[1].Value.Should().Be("12");
+		numberMatches[1].Index.Should().Be(8);
+	}
+
+	[Test]
 	public void TestPart1()
 	{
-		//var expectedAnswer = 2207;
+		var expectedAnswer = 533775;
 
-		//var solution = new Solution();
+		var solution = new Solution();
 
-		//var actualAnswer = solution.GetPart1Answer();
+		var actualAnswer = solution.GetPart1Answer();
 
-		//actualAnswer.Should().Be(expectedAnswer);
+		actualAnswer.Should().Be(expectedAnswer);
 	}
 
 	[Test]

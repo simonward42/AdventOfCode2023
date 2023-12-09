@@ -21,7 +21,7 @@ public class Solution : Puzzle<int>
 	//return the sum of the possible IDs.
 	protected override int SolvePart1()
 	{
-		while (InputReader!.TryReadLine(out string? currentLine))
+		while (InputReader.TryReadLine(out string? currentLine))
 		{
 			var game = ParseGame(currentLine);
 
@@ -44,7 +44,7 @@ public class Solution : Puzzle<int>
 	//find the powers of the minimum sets for each game, and return their sum.
 	protected override int SolvePart2()
 	{
-		while (InputReader!.TryReadLine(out string? currentLine))
+		while (InputReader.TryReadLine(out string? currentLine))
 		{
 			var game = ParseGame(currentLine);
 
