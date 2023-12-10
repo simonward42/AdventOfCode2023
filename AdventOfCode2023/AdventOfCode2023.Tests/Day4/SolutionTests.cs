@@ -97,13 +97,13 @@ public class SolutionTests
 	[Test]
 	public void TestPart2()
 	{
-		//var expectedAnswer = 78236071;
+		var expectedAnswer = 5554894;
 
-		//var solution = new Solution();
+		var solution = new Solution();
 
-		//var actualAnswer = solution.GetPart2Answer();
+		var actualAnswer = solution.GetPart2Answer();
 
-		//actualAnswer.Should().Be(expectedAnswer);
+		actualAnswer.Should().Be(expectedAnswer);
 	}
 
 	#endregion

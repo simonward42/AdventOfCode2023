@@ -29,9 +29,34 @@ public partial class Solution : Puzzle<int>
 		return pointSum;
 	}
 
-	//...
+	//Turns out points don't mean anything; scratch cards just win you... more scratch cards. 
+	//It goes like this:
+	// if card 1 has *two* matching numbers, I win a copy of the next *two* cards, i.e. card 2 and card 3.
+	// My two copies of card 2 have, say, one matching number, so I win another copy of card 3, giving three copies of card 3 in total
+	// ...and so on. 
+	//After going through this process with our whole pile, how many scratch cards in total do we end up with?
 	protected override int SolvePart2()
 	{
-		return 0;
+		var originalCards = new List<ScratchCard>();
+		while (InputReader.TryReadLine(out var currentLine))
+		{
+			originalCards.Add(new ScratchCard(currentLine));
+		}
+
+		var cardSets = originalCards.Select(c => new ScratchCardSet(c)).ToArray();
+
+		for (int i = 0; i < cardSets.Length; i++)
+		{
+			var currentSet = cardSets[i];
+			var matches = currentSet.ScratchCard.WinningMatches;
+
+			//for each copy of the card in the current set, increment the count of the next {matches} sets
+			for (int j = i + 1; j <= i + matches && j < cardSets.Length; j++)
+			{
+				cardSets[j].AddToSet(currentSet.Count);
+			}
+		}
+
+		return cardSets.Select(s => s.Count).Sum();
 	}
 }

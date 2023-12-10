@@ -30,14 +30,9 @@ namespace AdventOfCode2023.Day4
 		public IReadOnlyCollection<int> WinningNumbers { get; set; } = new List<int>();
 		public IReadOnlyCollection<int> YourNumbers { get; set; } = new List<int>();
 
-		public int PointValue
-		{
-			get
-			{
-				var winningMatches = YourNumbers.Intersect(WinningNumbers).Count();
-				return (int)Math.Pow(2, winningMatches - 1);
-			}
-		}
+		public int PointValue => (int)Math.Pow(2, WinningMatches - 1);
+
+		public int WinningMatches => YourNumbers.Intersect(WinningNumbers).Count();
 
 		[GeneratedRegex(@"Card[ ]+(\d+): ([\d ]+) \| ([\d ]+)")]
 		private static partial Regex _CardRegex();
