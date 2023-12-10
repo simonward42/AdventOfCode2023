@@ -131,11 +131,11 @@ public partial class Solution : Puzzle<int>
 	}
 
 	[GeneratedRegex(@"(\d+)")] //one or more digit
-	private static partial Regex _numberRegex();
+	private static partial Regex _NumberRegex();
 
 	private IEnumerable<NumberPosition> _ParseNumbers(int lineNumber, string currentLine)
 	{
-		var numberMatches = _numberRegex().Matches(currentLine);
+		var numberMatches = _NumberRegex().Matches(currentLine);
 
 		return numberMatches.Select(number => new NumberPosition
 		{
