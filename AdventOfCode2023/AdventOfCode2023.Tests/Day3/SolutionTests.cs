@@ -7,9 +7,14 @@ namespace AdventOfCode2023.Tests.Day3;
 
 public class SolutionTests
 {
-	//In this schematic, two numbers are not part numbers because they are not adjacent to a symbol:
-	//114 (top right) and 58 (middle right).
-	//Every other number is adjacent to a symbol and so is a part number; their sum is 4361.
+	//(i)
+	// In this schematic, two numbers are not part numbers because they are not adjacent to a symbol:
+	// 114 (top right) and 58 (middle right).
+	// Every other number is adjacent to a symbol and so is a part number; their sum is 4361.
+	//
+	//(ii)
+	// In this schematic, there are two gears: top left, with part numbers 467 & 35, so its gear ratio is 467*35=16345.
+	// The second is in the lower right with ratio 451490. The sum of ratios is 467835.
 	readonly string _testInput =
 		"467..114..\r\n" +
 		"...*......\r\n" +
@@ -22,7 +27,6 @@ public class SolutionTests
 		"...$.*....\r\n" +
 		".664.598..";
 
-	const int _expectedSum = 4361;
 	InputStringReader? _reader;
 
 	[SetUp]
@@ -31,12 +35,15 @@ public class SolutionTests
 		_reader = new InputStringReader(_testInput);
 	}
 
+	#region Part1
+
 	[Test]
 	public void TestPartNumberParsing()
 	{
-		var parsedPartNumbers = new Solution(_reader).ParsePartNumbers();
+		var expectedPartNumberSum = 4361;
+		var partNumbers = new Solution(_reader).FindPartNumbers();
 
-		parsedPartNumbers.Sum().Should().Be(_expectedSum);
+		partNumbers.Sum().Should().Be(expectedPartNumberSum);
 	}
 
 	[Test]
@@ -74,15 +81,29 @@ public class SolutionTests
 		actualAnswer.Should().Be(expectedAnswer);
 	}
 
+	#endregion
+	#region Part2
+
+	[Test]
+	public void TestGearRatioParsing()
+	{
+		var expectedGearRatioSum = 467835;
+		var gearRatios = new Solution(_reader).FindGearRatios();
+
+		gearRatios.Sum().Should().Be(expectedGearRatioSum);
+	}
+
 	[Test]
 	public void TestPart2()
 	{
-		//var expectedAnswer = 62241;
+		var expectedAnswer = 78236071;
 
-		//var solution = new Solution();
+		var solution = new Solution();
 
-		//var actualAnswer = solution.GetPart2Answer();
+		var actualAnswer = solution.GetPart2Answer();
 
-		//actualAnswer.Should().Be(expectedAnswer);
+		actualAnswer.Should().Be(expectedAnswer);
 	}
+
+	#endregion
 }
