@@ -74,9 +74,7 @@ public class SolutionTests
 	{
 		var expectedAnswer = 533775;
 
-		var solution = new Solution();
-
-		var actualAnswer = solution.GetPart1Answer();
+		var actualAnswer = new Solution().GetPart1Answer();
 
 		actualAnswer.Should().Be(expectedAnswer);
 	}
@@ -98,9 +96,7 @@ public class SolutionTests
 	{
 		var expectedAnswer = 78236071;
 
-		var solution = new Solution();
-
-		var actualAnswer = solution.GetPart2Answer();
+		var actualAnswer = new Solution().GetPart2Answer();
 
 		actualAnswer.Should().Be(expectedAnswer);
 	}

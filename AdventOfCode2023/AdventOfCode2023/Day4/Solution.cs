@@ -32,7 +32,7 @@ public partial class Solution : Puzzle<int>
 	//Turns out points don't mean anything; scratch cards just win you... more scratch cards. 
 	//It goes like this:
 	// if card 1 has *two* matching numbers, I win a copy of the next *two* cards, i.e. card 2 and card 3.
-	// My two copies of card 2 have, say, one matching number, so I win another copy of card 3, giving three copies of card 3 in total
+	// My *two* copies of card 2 have, say, one matching number, so I win another *two* copies of card 3, giving four copies of card 3 in total
 	// ...and so on. 
 	//After going through this process with our whole pile, how many scratch cards in total do we end up with?
 	protected override int SolvePart2()

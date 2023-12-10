@@ -24,11 +24,16 @@ namespace AdventOfCode2023.Day4
 				.ToArray();
 		}
 
-		internal ScratchCard() { }
+		internal ScratchCard(int id, int[] winningNumbers, int[] yourNumbers)
+		{
+			CardId = id;
+			WinningNumbers = winningNumbers;
+			YourNumbers = yourNumbers;
+		}
 
-		public int CardId { get; set; } = 0;
-		public IReadOnlyCollection<int> WinningNumbers { get; set; } = new List<int>();
-		public IReadOnlyCollection<int> YourNumbers { get; set; } = new List<int>();
+		public int CardId { get; } = 0;
+		public IReadOnlyCollection<int> WinningNumbers { get; } = new List<int>();
+		public IReadOnlyCollection<int> YourNumbers { get; } = new List<int>();
 
 		public int PointValue => (int)Math.Pow(2, WinningMatches - 1);
 

@@ -35,19 +35,15 @@ public class SolutionTests
 
 	private static IEnumerable<(string, ScratchCard)> _CtorCases()
 	{
-		yield return ("Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53", new ScratchCard
-		{
-			CardId = 1,
-			WinningNumbers = new[] { 41, 48, 83, 86, 17 },
-			YourNumbers = new[] { 83, 86, 6, 31, 17, 9, 48, 53 }
-		});
+		yield return (
+			"Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53",
+			new ScratchCard(id: 1, winningNumbers: new[] { 41, 48, 83, 86, 17 }, yourNumbers: new[] { 83, 86, 6, 31, 17, 9, 48, 53 })
+		);
 
-		yield return ("Card   12: 34  6 |  9 14  3 34", new ScratchCard
-		{
-			CardId = 12,
-			WinningNumbers = new[] { 34, 6 },
-			YourNumbers = new[] { 9, 14, 3, 34 }
-		});
+		yield return (
+			"Card   12: 34  6 |  9 14  3 34",
+			new ScratchCard(id: 12, winningNumbers: new[] { 34, 6 }, yourNumbers: new[] { 9, 14, 3, 34 })
+		);
 	}
 
 	[Test]
@@ -84,9 +80,7 @@ public class SolutionTests
 	{
 		var expectedAnswer = 17803;
 
-		var solution = new Solution();
-
-		var actualAnswer = solution.GetPart1Answer();
+		var actualAnswer = new Solution().GetPart1Answer();
 
 		actualAnswer.Should().Be(expectedAnswer);
 	}
@@ -99,9 +93,7 @@ public class SolutionTests
 	{
 		var expectedAnswer = 5554894;
 
-		var solution = new Solution();
-
-		var actualAnswer = solution.GetPart2Answer();
+		var actualAnswer = new Solution().GetPart2Answer();
 
 		actualAnswer.Should().Be(expectedAnswer);
 	}

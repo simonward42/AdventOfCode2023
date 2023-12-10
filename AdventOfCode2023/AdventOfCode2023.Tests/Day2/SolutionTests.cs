@@ -32,9 +32,7 @@ public class SolutionTests
 	{
 		var expectedAnswer = 2207;
 
-		var solution = new Solution();
-
-		var actualAnswer = solution.GetPart1Answer();
+		var actualAnswer = new Solution().GetPart1Answer();
 
 		actualAnswer.Should().Be(expectedAnswer);
 	}
@@ -44,9 +42,7 @@ public class SolutionTests
 	{
 		var expectedAnswer = 62241;
 
-		var solution = new Solution();
-
-		var actualAnswer = solution.GetPart2Answer();
+		var actualAnswer = new Solution().GetPart2Answer();
 
 		actualAnswer.Should().Be(expectedAnswer);
 	}
