@@ -1,5 +1,7 @@
 using AdventOfCode2023.Util;
 
+using FluentAssertions.Execution;
+
 namespace AdventOfCode2023.Tests.Util;
 
 public class StringInputReaderTests
@@ -14,20 +16,26 @@ public class StringInputReaderTests
 		"second line"
 	};
 
+	InputStringReader _sut;
+
+	[SetUp]
+	public void SetUp()
+	{
+		_sut = new InputStringReader(_testInput);
+	}
+
 	[Test]
 	public void TestTryReadLine()
 	{
-		var sut = new InputStringReader(_testInput);
-
-		var firstLineRead = sut.TryReadLine(out var firstLine);
+		var firstLineRead = _sut.TryReadLine(out var firstLine);
 		firstLineRead.Should().BeTrue();
 		firstLine.Should().Be(_expectedLines[0]);
 
-		var secondLineRead = sut.TryReadLine(out var secondLine);
+		var secondLineRead = _sut.TryReadLine(out var secondLine);
 		secondLineRead.Should().BeTrue();
 		secondLine.Should().Be(_expectedLines[1]);
 
-		var thirdLineRead = sut.TryReadLine(out var thirdLine);
+		var thirdLineRead = _sut.TryReadLine(out var thirdLine);
 		thirdLineRead.Should().BeFalse();
 		thirdLine.Should().BeNull();
 	}
@@ -35,13 +43,28 @@ public class StringInputReaderTests
 	[Test]
 	public void TestRewind()
 	{
-		var sut = new InputStringReader(_testInput);
+		_ = _sut.TryReadLine(out var firstLine);
 
-		_ = sut.TryReadLine(out var firstLine);
+		_sut.Rewind();
 
-		sut.Rewind();
-
-		_ = sut.TryReadLine(out var nextLine);
+		_ = _sut.TryReadLine(out var nextLine);
 		nextLine.Should().Be(firstLine);
+	}
+
+	[Test]
+	public void TestReadLine()
+	{
+		var firstRead = _sut.ReadLine();
+		var secondRead = _sut.ReadLine();
+
+		Action thirdRead = () => _sut.ReadLine();
+
+		using (new AssertionScope())
+		{
+			firstRead.Should().Be(_expectedLines[0]);
+			secondRead.Should().Be(_expectedLines[1]);
+
+			thirdRead.Should().Throw<EndOfInputException>();
+		}
 	}
 }

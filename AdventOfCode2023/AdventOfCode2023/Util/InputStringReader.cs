@@ -1,11 +1,11 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿namespace AdventOfCode2023.Util;
 
-namespace AdventOfCode2023.Util;
-
-public class InputStringReader : IInputReader
+public class InputStringReader : InputTextReader, IInputReader
 {
-	private StringReader _reader;
 	private readonly string _input;
+	private StringReader _reader;
+
+	protected override TextReader Reader => _reader;
 
 	public InputStringReader(string input)
 	{
@@ -13,17 +13,9 @@ public class InputStringReader : IInputReader
 		_input = input;
 	}
 
-	public bool TryReadLine([NotNullWhen(true)] out string? line)
-	{
-		line = _reader.ReadLine();
-		return line != null;
-	}
-
-	public void Rewind()
+	public override void Rewind()
 	{
 		_reader.Dispose();
 		_reader = new StringReader(_input);
 	}
-
-	public void Dispose() => _reader.Dispose();
 }
