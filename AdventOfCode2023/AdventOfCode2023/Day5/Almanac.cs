@@ -1,65 +1,56 @@
 ﻿using System.Text.RegularExpressions;
 
-using AdventOfCode2023.Util;
-
 namespace AdventOfCode2023.Day5
 {
 	public partial class Almanac
 	{
-		private readonly Dictionary<int, int> _seedToSoil = new();
-		private readonly Dictionary<int, int> _soilToFertilizer = new();
-		private readonly Dictionary<int, int> _fertilizerToWater = new();
-		private readonly Dictionary<int, int> _waterToLight = new();
-		private readonly Dictionary<int, int> _lightToTemperature = new();
-		private readonly Dictionary<int, int> _temperatureToHumidity = new();
-		private readonly Dictionary<int, int> _humidityToLocation = new();
-
-		public Dictionary<int, int> SeedToSoil => _seedToSoil;
-
-		public void FillSeedToSoilMap(string inputString)
+		public enum MapType
 		{
-			_FillMap(inputString, _seedToSoil);
+			SeedToSoil,
+			SoilToFertilizer,
+			FertilizerToWater,
+			WaterToLight,
+			LightToTemperature,
+			TemperatureToHumidity,
+			HumidityToLocation
 		}
 
-		public void FillSoilToFertilizerMap(string inputString)
+		private readonly Dictionary<MapType, Dictionary<int, int>> _maps = new()
 		{
-			_FillMap(inputString, _soilToFertilizer);
+			{ MapType.SeedToSoil, new() },
+			{ MapType.SoilToFertilizer, new() },
+			{ MapType.FertilizerToWater, new() },
+			{ MapType.WaterToLight, new() },
+			{ MapType.LightToTemperature, new() },
+			{ MapType.TemperatureToHumidity, new() },
+			{ MapType.HumidityToLocation, new() }
+		};
+
+		public Dictionary<int, int> SeedToSoil => _maps[MapType.SeedToSoil];
+
+		public int GetLocationForSeed(int seed)
+		{
+			var source = seed;
+			int dest = 0;
+			foreach (var mapType in Enum.GetValues<MapType>())
+			{
+				dest = _GetDestination(mapType, source);
+				source = dest;
+			}
+
+			return dest;
 		}
 
-		public void FillFertilizerToWaterMap(string inputString)
-		{
-			_FillMap(inputString, _fertilizerToWater);
-		}
-
-		public void FillWaterToLightMap(string inputString)
-		{
-			_FillMap(inputString, _waterToLight);
-		}
-
-		public void FillLightToTemperatureMap(string inputString)
-		{
-			_FillMap(inputString, _lightToTemperature);
-		}
-
-		public void FillTemperatureToHumidity(string inputString)
-		{
-			_FillMap(inputString, _temperatureToHumidity);
-		}
-
-		public void FillHumidityToLocation(string inputString)
-		{
-			_FillMap(inputString, _humidityToLocation);
-		}
-
-		private void _FillMap(string input, Dictionary<int, int> mapToFill)
+		public void FillMap(MapType mapType, string[] input)
 		{
 			//for each line expect:"xxx yyy zzz", where
 			// xxx = destination range start
 			// yyy = source range start
 			// zzz = range length
 
-			var reader = new InputStringReader(input);
-			while (reader.TryReadLine(out var line))
+			var mapToFill = _maps[mapType];
+
+			foreach (var line in input)
 			{
 				var mapMatch = _MapLine().Match(line);
 				//TODO factor out the raw regex matching
@@ -80,5 +71,14 @@ namespace AdventOfCode2023.Day5
 
 		[GeneratedRegex(@$"(?<{_dest}>\d+) (?<{_src}>\d+) (?<{_rng}>\d+)")]
 		private static partial Regex _MapLine();
+
+
+		private int _GetDestination(MapType mapType, int source)
+		{
+			if (_maps[mapType].TryGetValue(source, out int dest))
+				return dest;
+
+			return source;
+		}
 	}
 }

@@ -43,7 +43,8 @@ public class SolutionTests
 		"\r\n" +
 		"humidity-to-location map:\r\n" +
 		"60 56 37\r\n" +
-		"56 93 4";
+		"56 93 4\r\n" +
+		"\r\n";
 
 	int _expectedExampleAnswer = 35;
 
@@ -60,9 +61,11 @@ public class SolutionTests
 	[Test]
 	public void TestAlmanacMapFill()
 	{
-		var exampleSeedToSoilMapInput =
-			"50 98 2\r\n" +
-			"52 50 3\r\n";
+		var exampleSeedToSoilMapInput = new string[]
+		{
+			"50 98 2",
+			"52 50 3"
+		};
 
 		var expectedDictionary = new Dictionary<int, int> {
 			{ 98, 50 },
@@ -73,7 +76,7 @@ public class SolutionTests
 		};
 
 		var almanac = new Almanac();
-		almanac.FillSeedToSoilMap(exampleSeedToSoilMapInput);
+		almanac.FillMap(Almanac.MapType.SeedToSoil, exampleSeedToSoilMapInput);
 
 		almanac.SeedToSoil.Should().BeEquivalentTo(expectedDictionary);
 	}
@@ -89,11 +92,11 @@ public class SolutionTests
 	[Test]
 	public void TestPart1()
 	{
-		//var expectedAnswer = TODO;
+		var expectedAnswer = 0; //TODO
 
-		//var actualAnswer = new Solution().GetPart1Answer();
+		var actualAnswer = new Solution().GetPart1Answer();
 
-		//actualAnswer.Should().Be(expectedAnswer);
+		actualAnswer.Should().Be(expectedAnswer);
 	}
 
 	#endregion

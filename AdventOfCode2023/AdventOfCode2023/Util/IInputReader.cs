@@ -16,7 +16,7 @@ namespace AdventOfCode2023.Util
 		/// Does *not* expect to reach the end of the input. 
 		/// </summary>
 		/// <exception cref="EndOfInputException">Thrown when the end of the input is reached before an empty line</exception>
-		string ReadUntilEmptyLine();
+		string[] ReadUntilEmptyLine();
 	}
 
 	[Serializable]

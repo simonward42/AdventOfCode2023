@@ -18,18 +18,18 @@ namespace AdventOfCode2023.Util
 			return line ?? throw new EndOfInputException();
 		}
 
-		public string ReadUntilEmptyLine()
+		public string[] ReadUntilEmptyLine()
 		{
-			var accumulatedString = string.Empty;
+			var nonEmptyLines = new List<string>();
 
-			var line = Reader.ReadLine();
+			var line = ReadLine();
 
 			while (line != string.Empty)
 			{
-				accumulatedString += line;
-				line = Reader.ReadLine();
+				nonEmptyLines.Add(line);
+				line = ReadLine();
 			}
-			return accumulatedString;
+			return nonEmptyLines.ToArray();
 		}
 
 		public abstract void Rewind();
