@@ -2,7 +2,7 @@
 
 namespace AdventOfCode2023.Day5;
 
-public partial class Solution : Puzzle<int>
+public partial class Solution : Puzzle<long>
 {
 	public const int day = 5;
 	public Solution(IInputReader? reader = null) : base(day, reader)
@@ -10,7 +10,7 @@ public partial class Solution : Puzzle<int>
 	}
 
 	//...
-	protected override int SolvePart1()
+	protected override long SolvePart1()
 	{
 		//1. parse seeds to input into almanac later
 		//2. parse maps into almanac's dictionaries
@@ -18,7 +18,7 @@ public partial class Solution : Puzzle<int>
 		//4. return minimum location
 
 		var seedLine = InputReader.ReadLine();
-		int[] seeds = _GetSeeds(seedLine);
+		var seeds = _GetSeeds(seedLine);
 
 		_ = InputReader.ReadLine(); //throw away line break
 
@@ -45,7 +45,6 @@ public partial class Solution : Puzzle<int>
 		mapInput = InputReader.ReadUntilEmptyLine();
 		almanac.FillMap(Almanac.MapType.FertilizerToWater, mapInput);
 
-
 		_ = InputReader.ReadLine(); //water-to-light map:
 		mapInput = InputReader.ReadUntilEmptyLine();
 		almanac.FillMap(Almanac.MapType.WaterToLight, mapInput);
@@ -63,14 +62,14 @@ public partial class Solution : Puzzle<int>
 		almanac.FillMap(Almanac.MapType.HumidityToLocation, mapInput);
 	}
 
-	private static int[] _GetSeeds(string seedLine)
+	private static long[] _GetSeeds(string seedLine)
 	{
 		var seedNumbers = seedLine.Split(':')[1].Trim();
-		return seedNumbers.Split(' ').Select(int.Parse).ToArray();
+		return seedNumbers.Split(' ').Select(long.Parse).ToArray();
 	}
 
 	//...
-	protected override int SolvePart2()
+	protected override long SolvePart2()
 	{
 		return 0;
 	}

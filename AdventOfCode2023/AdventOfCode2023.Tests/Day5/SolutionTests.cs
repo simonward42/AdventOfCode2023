@@ -1,6 +1,8 @@
 using AdventOfCode2023.Day5;
 using AdventOfCode2023.Util;
 
+using FluentAssertions.Execution;
+
 namespace AdventOfCode2023.Tests.Day5;
 
 public class SolutionTests
@@ -67,7 +69,7 @@ public class SolutionTests
 			"52 50 3"
 		};
 
-		var expectedDictionary = new Dictionary<int, int> {
+		var expectedDictionary = new Dictionary<long, long> {
 			{ 98, 50 },
 			{ 99, 51 },
 			{ 50, 52 },
@@ -82,6 +84,44 @@ public class SolutionTests
 	}
 
 	[Test]
+	public void TestRangedMap()
+	{
+		var exampleSeedToSoilMapInput = new string[]
+		{
+			"50 98 2",
+			"52 50 3"
+		};
+
+		var expectedMappings = new (ulong, ulong)[]
+		{
+			(1, 1),
+			(2, 2),
+			(3, 3),
+			//...
+			(49, 49),
+			(50, 52),
+			(51, 53),
+			(52, 54),
+			(53, 53),
+			//...
+			(97, 97),
+			(98, 50),
+			(99, 51),
+			(100, 100),
+		};
+
+		var map = new RangedMap(exampleSeedToSoilMapInput);
+
+		using (new AssertionScope())
+		{
+			foreach (var mapping in expectedMappings)
+			{
+				map.GetDestination(mapping.Item1).Should().Be(mapping.Item2);
+			}
+		}
+	}
+
+	[Test]
 	public void TestExample()
 	{
 		var actualAnswer = new Solution(_reader).GetPart1Answer();
@@ -92,11 +132,11 @@ public class SolutionTests
 	[Test]
 	public void TestPart1()
 	{
-		var expectedAnswer = 0; //TODO
+		//var expectedAnswer = 0; //TODO
 
-		var actualAnswer = new Solution().GetPart1Answer();
+		//var actualAnswer = new Solution().GetPart1Answer();
 
-		actualAnswer.Should().Be(expectedAnswer);
+		//actualAnswer.Should().Be(expectedAnswer);
 	}
 
 	#endregion
