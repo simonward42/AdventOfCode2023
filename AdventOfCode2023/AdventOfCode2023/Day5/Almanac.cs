@@ -60,17 +60,14 @@ public partial class RangedMap
 
 	public ulong GetDestination(ulong source)
 	{
-		var dest = source;
 		foreach (var x in _mappedValues)
 		{
-			var offset = (long)(source - x.src);
-			if (0 <= offset && offset < (long)x.range)
+			if (x.src <= source && source < x.src + x.range)
 			{
-				dest = x.dest + (ulong)offset;
-				break;
+				return x.dest + (source - x.src);
 			}
 		}
-		return dest;
+		return source;
 	}
 
 	private List<(ulong src, ulong dest, ulong range)> _mappedValues = new();

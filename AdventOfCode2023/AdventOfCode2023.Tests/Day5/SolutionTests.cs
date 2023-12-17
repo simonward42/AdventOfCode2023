@@ -8,10 +8,13 @@ namespace AdventOfCode2023.Tests.Day5;
 public class SolutionTests
 {
 	//(i)
-	// ...
+	// Map each seed value through each map to find its location. Return the minimum.
+	// Expected answer: 35
 	//
 	//(ii)
-	// ...
+	// This time the seed line is seed *ranges*. First val of each pair is the start val, the second is the range length. 
+	// This time we've got to consider every seed in each range. 
+	// Expected answer: 46
 	readonly string _testInput =
 		"seeds: 79 14 55 13\r\n" +
 		"\r\n" +
@@ -48,7 +51,8 @@ public class SolutionTests
 		"56 93 4\r\n" +
 		"\r\n";
 
-	ulong _expectedExampleAnswer = 35;
+	ulong _expectedPart1ExampleAnswer = 35;
+	ulong _expectedPart2ExampleAnswer = 46;
 
 	InputStringReader? _reader;
 
@@ -99,11 +103,11 @@ public class SolutionTests
 	}
 
 	[Test]
-	public void TestExample()
+	public void TestPart1Example()
 	{
 		var actualAnswer = new Solution(_reader).GetPart1Answer();
 
-		actualAnswer.Should().Be(_expectedExampleAnswer);
+		actualAnswer.Should().Be(_expectedPart1ExampleAnswer);
 	}
 
 	[Test]
@@ -118,6 +122,14 @@ public class SolutionTests
 
 	#endregion
 	#region Part2
+
+	[Test]
+	public void TestPart2Example()
+	{
+		var actualAnswer = new Solution(_reader).GetPart2Answer();
+
+		actualAnswer.Should().Be(_expectedPart2ExampleAnswer);
+	}
 
 	[Test]
 	public void TestPart2()

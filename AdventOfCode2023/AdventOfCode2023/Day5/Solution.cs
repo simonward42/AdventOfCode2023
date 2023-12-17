@@ -1,4 +1,6 @@
-﻿using AdventOfCode2023.Util;
+﻿using System.Text.RegularExpressions;
+
+using AdventOfCode2023.Util;
 
 namespace AdventOfCode2023.Day5;
 
@@ -18,7 +20,7 @@ public partial class Solution : Puzzle<ulong>
 		//4. return minimum location
 
 		var seedLine = InputReader.ReadLine();
-		var seeds = _GetSeeds(seedLine);
+		var seeds = _GetSeedsPart1(seedLine);
 
 		_ = InputReader.ReadLine(); //throw away line break
 
@@ -26,9 +28,28 @@ public partial class Solution : Puzzle<ulong>
 
 		_FillAlmanacMaps(almanac);
 
-		var seedLocations = seeds.Select(s => almanac.GetLocationForSeed(s));
+		var seedLocations = seeds.Select(almanac.GetLocationForSeed);
 
 		return seedLocations.Min();
+	}
+
+	//Turns out we've got to consider seed *ranges* this time.
+	//The seed input line consists of pairs: the seed range start followed by the range length. 
+	//Considering every seed in all the ranges this time, again find the minimum mapped location...
+	protected override ulong SolvePart2()
+	{
+		//Ranges are far too big to consider each seed individually.
+		//We'll need to consider the range as a whole, and get the Almanac to return the min location for each range. 
+
+		//1. parse seed ranges
+		//2. build almanac as before
+		//3. get min location for each range by being smart with the almanac 
+		//4. return min location
+
+		var seedLine = InputReader.ReadLine();
+		var seeds = _GetSeedsPart2(seedLine);
+
+		return 0;
 	}
 
 	private void _FillAlmanacMaps(Almanac almanac)
@@ -62,15 +83,21 @@ public partial class Solution : Puzzle<ulong>
 		almanac.InitializeMap(Almanac.MapType.HumidityToLocation, mapInput);
 	}
 
-	private static ulong[] _GetSeeds(string seedLine)
+	private static ulong[] _GetSeedsPart1(string seedLine)
 	{
 		var seedNumbers = seedLine.Split(':')[1].Trim();
 		return seedNumbers.Split(' ').Select(ulong.Parse).ToArray();
 	}
 
-	//...
-	protected override ulong SolvePart2()
+	private static RangedNumber<ulong>[] _GetSeedsPart2(string seedLine)
 	{
-		return 0;
+		var pairRegex = new Regex(@"(\d+) (\d+)");
+		var matches = pairRegex.Matches(seedLine);
+
+		var seedRanges = matches.Select(s => new RangedNumber<ulong>(
+			ulong.Parse(s.Groups[1].Value),
+			ulong.Parse(s.Groups[2].Value)));
+
+		return seedRanges.ToArray();
 	}
 }
