@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Runtime.Serialization;
+using System.Text.RegularExpressions;
 
 namespace AdventOfCode2023.Day5;
 
@@ -15,34 +16,21 @@ public partial class Almanac
 		HumidityToLocation
 	}
 
-	private readonly Dictionary<MapType, Dictionary<long, long>> _maps = new()
+	private readonly Dictionary<MapType, RangedMap?> _maps = new()
 	{
-		{ MapType.SeedToSoil, new() },
-		{ MapType.SoilToFertilizer, new() },
-		{ MapType.FertilizerToWater, new() },
-		{ MapType.WaterToLight, new() },
-		{ MapType.LightToTemperature, new() },
-		{ MapType.TemperatureToHumidity, new() },
-		{ MapType.HumidityToLocation, new() }
+		{ MapType.SeedToSoil, null },
+		{ MapType.SoilToFertilizer, null },
+		{ MapType.FertilizerToWater, null },
+		{ MapType.WaterToLight, null },
+		{ MapType.LightToTemperature, null },
+		{ MapType.TemperatureToHumidity, null },
+		{ MapType.HumidityToLocation, null }
 	};
 
-	private readonly Dictionary<MapType, Dictionary<long, (long, long)>> _mapsRedo = new()
-	{
-		{ MapType.SeedToSoil, new() },
-		{ MapType.SoilToFertilizer, new() },
-		{ MapType.FertilizerToWater, new() },
-		{ MapType.WaterToLight, new() },
-		{ MapType.LightToTemperature, new() },
-		{ MapType.TemperatureToHumidity, new() },
-		{ MapType.HumidityToLocation, new() }
-	};
-
-	public Dictionary<long, long> SeedToSoil => _maps[MapType.SeedToSoil];
-
-	public long GetLocationForSeed(long seed)
+	public ulong GetLocationForSeed(ulong seed)
 	{
 		var source = seed;
-		long dest = 0;
+		ulong dest = 0;
 		foreach (var mapType in Enum.GetValues<MapType>())
 		{
 			dest = _GetDestination(mapType, source);
@@ -52,54 +40,22 @@ public partial class Almanac
 		return dest;
 	}
 
-	public void FillMap(MapType mapType, string[] input)
+	public void InitializeMap(MapType mapType, string[] input)
 	{
-		//for each line expect:"xxx yyy zzz", where
-		// xxx = destination range start
-		// yyy = source range start
-		// zzz = range length
-
-		var mapToFill = _maps[mapType];
-
-		foreach (var line in input)
-		{
-			var mapMatch = _MapLine().Match(line);
-			//TODO factor out the raw regex matching
-			var destStart = long.Parse(mapMatch.Groups[_dest].Value);
-			var srcStart = long.Parse(mapMatch.Groups[_src].Value);
-			var rangeLen = long.Parse(mapMatch.Groups[_rng].Value);
-
-			for (var i = 0; i < rangeLen; i++)
-			{
-				mapToFill.Add(srcStart + i, destStart + i);
-			}
-		}
+		_maps[mapType] = new RangedMap(input);
 	}
 
-	private const string _dest = "dest";
-	private const string _src = "src";
-	private const string _rng = "rng";
-
-	[GeneratedRegex(@$"(?<{_dest}>\d+) (?<{_src}>\d+) (?<{_rng}>\d+)")]
-	private static partial Regex _MapLine();
-
-
-	private long _GetDestination(MapType mapType, long source)
+	private ulong _GetDestination(MapType mapType, ulong source)
 	{
-		if (_maps[mapType].TryGetValue(source, out long dest))
-			return dest;
-
-		return source;
+		return _maps[mapType]?.GetDestination(source) ?? throw new UninitializedMapException();
 	}
 }
 
 public partial class RangedMap
 {
-	private List<(ulong src, ulong dest, ulong range)> _mappedValues = new();
-
-	public bool IsMapped(ulong source)
+	public RangedMap(string[] input)
 	{
-		return _mappedValues.Any(x => x.src <= source && source < x.src + x.range);
+		_FillMap(input);
 	}
 
 	public ulong GetDestination(ulong source)
@@ -117,15 +73,7 @@ public partial class RangedMap
 		return dest;
 	}
 
-	public void Add(ulong sourceStart, ulong destStart, ulong range)
-	{
-		_mappedValues.Add((sourceStart, destStart, range));
-	}
-
-	public RangedMap(string[] input)
-	{
-		_FillMap(input);
-	}
+	private List<(ulong src, ulong dest, ulong range)> _mappedValues = new();
 
 	private const string _dest = "dest";
 	private const string _src = "src";
@@ -150,5 +98,25 @@ public partial class RangedMap
 
 			_mappedValues.Add((srcStart, destStart, rangeLen));
 		}
+	}
+}
+
+[Serializable]
+internal class UninitializedMapException : Exception
+{
+	public UninitializedMapException()
+	{
+	}
+
+	public UninitializedMapException(string? message) : base(message)
+	{
+	}
+
+	public UninitializedMapException(string? message, Exception? innerException) : base(message, innerException)
+	{
+	}
+
+	protected UninitializedMapException(SerializationInfo info, StreamingContext context) : base(info, context)
+	{
 	}
 }

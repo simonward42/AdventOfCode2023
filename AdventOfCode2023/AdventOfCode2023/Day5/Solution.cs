@@ -2,15 +2,15 @@
 
 namespace AdventOfCode2023.Day5;
 
-public partial class Solution : Puzzle<long>
+public partial class Solution : Puzzle<ulong>
 {
 	public const int day = 5;
 	public Solution(IInputReader? reader = null) : base(day, reader)
 	{
 	}
 
-	//...
-	protected override long SolvePart1()
+	//hard to summarize... just read https://adventofcode.com/2023/day/5#part1 !
+	protected override ulong SolvePart1()
 	{
 		//1. parse seeds to input into almanac later
 		//2. parse maps into almanac's dictionaries
@@ -35,41 +35,41 @@ public partial class Solution : Puzzle<long>
 	{
 		_ = InputReader.ReadLine(); //seed-to-soil map:
 		var mapInput = InputReader.ReadUntilEmptyLine();
-		almanac.FillMap(Almanac.MapType.SeedToSoil, mapInput);
+		almanac.InitializeMap(Almanac.MapType.SeedToSoil, mapInput);
 
 		_ = InputReader.ReadLine(); //soil-to-fertilizer map:
 		mapInput = InputReader.ReadUntilEmptyLine();
-		almanac.FillMap(Almanac.MapType.SoilToFertilizer, mapInput);
+		almanac.InitializeMap(Almanac.MapType.SoilToFertilizer, mapInput);
 
 		_ = InputReader.ReadLine(); //fertilizer-to-water map:
 		mapInput = InputReader.ReadUntilEmptyLine();
-		almanac.FillMap(Almanac.MapType.FertilizerToWater, mapInput);
+		almanac.InitializeMap(Almanac.MapType.FertilizerToWater, mapInput);
 
 		_ = InputReader.ReadLine(); //water-to-light map:
 		mapInput = InputReader.ReadUntilEmptyLine();
-		almanac.FillMap(Almanac.MapType.WaterToLight, mapInput);
+		almanac.InitializeMap(Almanac.MapType.WaterToLight, mapInput);
 
 		_ = InputReader.ReadLine(); //light-to-temperature map:
 		mapInput = InputReader.ReadUntilEmptyLine();
-		almanac.FillMap(Almanac.MapType.LightToTemperature, mapInput);
+		almanac.InitializeMap(Almanac.MapType.LightToTemperature, mapInput);
 
 		_ = InputReader.ReadLine(); //temperature-to-humidity map:
 		mapInput = InputReader.ReadUntilEmptyLine();
-		almanac.FillMap(Almanac.MapType.TemperatureToHumidity, mapInput);
+		almanac.InitializeMap(Almanac.MapType.TemperatureToHumidity, mapInput);
 
 		_ = InputReader.ReadLine(); //humidity-to-location map:
 		mapInput = InputReader.ReadUntilEmptyLine();
-		almanac.FillMap(Almanac.MapType.HumidityToLocation, mapInput);
+		almanac.InitializeMap(Almanac.MapType.HumidityToLocation, mapInput);
 	}
 
-	private static long[] _GetSeeds(string seedLine)
+	private static ulong[] _GetSeeds(string seedLine)
 	{
 		var seedNumbers = seedLine.Split(':')[1].Trim();
-		return seedNumbers.Split(' ').Select(long.Parse).ToArray();
+		return seedNumbers.Split(' ').Select(ulong.Parse).ToArray();
 	}
 
 	//...
-	protected override long SolvePart2()
+	protected override ulong SolvePart2()
 	{
 		return 0;
 	}

@@ -48,7 +48,7 @@ public class SolutionTests
 		"56 93 4\r\n" +
 		"\r\n";
 
-	int _expectedExampleAnswer = 35;
+	ulong _expectedExampleAnswer = 35;
 
 	InputStringReader? _reader;
 
@@ -59,29 +59,6 @@ public class SolutionTests
 	}
 
 	#region Part1
-
-	[Test]
-	public void TestAlmanacMapFill()
-	{
-		var exampleSeedToSoilMapInput = new string[]
-		{
-			"50 98 2",
-			"52 50 3"
-		};
-
-		var expectedDictionary = new Dictionary<long, long> {
-			{ 98, 50 },
-			{ 99, 51 },
-			{ 50, 52 },
-			{ 51, 53 },
-			{ 52, 54 },
-		};
-
-		var almanac = new Almanac();
-		almanac.FillMap(Almanac.MapType.SeedToSoil, exampleSeedToSoilMapInput);
-
-		almanac.SeedToSoil.Should().BeEquivalentTo(expectedDictionary);
-	}
 
 	[Test]
 	public void TestRangedMap()
@@ -132,11 +109,11 @@ public class SolutionTests
 	[Test]
 	public void TestPart1()
 	{
-		//var expectedAnswer = 0; //TODO
+		var expectedAnswer = 178159714ul;
 
-		//var actualAnswer = new Solution().GetPart1Answer();
+		var actualAnswer = new Solution().GetPart1Answer();
 
-		//actualAnswer.Should().Be(expectedAnswer);
+		actualAnswer.Should().Be(expectedAnswer);
 	}
 
 	#endregion

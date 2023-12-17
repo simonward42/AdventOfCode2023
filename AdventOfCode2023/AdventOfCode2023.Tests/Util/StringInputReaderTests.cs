@@ -56,15 +56,13 @@ public class StringInputReaderTests
 	{
 		var firstRead = _sut.ReadLine();
 		var secondRead = _sut.ReadLine();
-
-		Action thirdRead = () => _sut.ReadLine();
+		var thirdRead = _sut.ReadLine();
 
 		using (new AssertionScope())
 		{
 			firstRead.Should().Be(_expectedLines[0]);
 			secondRead.Should().Be(_expectedLines[1]);
-
-			thirdRead.Should().Throw<EndOfInputException>();
+			thirdRead.Should().BeNull();
 		}
 	}
 }

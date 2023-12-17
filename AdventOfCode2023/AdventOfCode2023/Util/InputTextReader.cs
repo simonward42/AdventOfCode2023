@@ -12,10 +12,9 @@ namespace AdventOfCode2023.Util
 			return line != null;
 		}
 
-		public string ReadLine()
+		public string? ReadLine()
 		{
-			var line = Reader.ReadLine();
-			return line ?? throw new EndOfInputException();
+			return Reader.ReadLine();
 		}
 
 		public string[] ReadUntilEmptyLine()
@@ -24,7 +23,7 @@ namespace AdventOfCode2023.Util
 
 			var line = ReadLine();
 
-			while (line != string.Empty)
+			while (!string.IsNullOrEmpty(line))
 			{
 				nonEmptyLines.Add(line);
 				line = ReadLine();
